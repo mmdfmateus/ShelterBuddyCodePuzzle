@@ -19,7 +19,7 @@ public class Animal : BaseEntity<Guid>
     {
         var years = AgeYears is not null ? $"{AgeYears} years " : string.Empty;
         var months = AgeMonths is not null ? $"{AgeMonths} months " : string.Empty;
-        var weeks = AgeWeeks is not null ? $"{AgeWeeks} weeks " : string.Empty;
+        var weeks = AgeWeeks is not null ? $"{AgeWeeks} weeks" : string.Empty;
         return $"{years}{months}{weeks}".Trim();
     }
 }
