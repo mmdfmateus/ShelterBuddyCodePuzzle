@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShelterBuddy.CodePuzzle.Api.Models;
+using ShelterBuddy.CodePuzzle.Api.Models.Validations;
 using ShelterBuddy.CodePuzzle.Core.DataAccess;
 using ShelterBuddy.CodePuzzle.Core.Entities;
 
@@ -10,10 +11,12 @@ namespace ShelterBuddy.CodePuzzle.Api.Controllers;
 public class AnimalController : ControllerBase
 {
     private readonly IRepository<Animal, Guid> repository;
+    private readonly AnimalModelValidator _animalModelValidator;
 
-    public AnimalController(IRepository<Animal, Guid> animalRepository)
+    public AnimalController(IRepository<Animal, Guid> animalRepository, AnimalModelValidator animalModelValidator)
     {
         repository = animalRepository;
+        _animalModelValidator = animalModelValidator;
     }
 
     [HttpGet]
@@ -34,8 +37,14 @@ public class AnimalController : ControllerBase
     }).ToArray();
 
     [HttpPost]
-    public void Post(AnimalModel newAnimal)
+    public async Task<ActionResult> Post(AnimalModel newAnimal)
     {
-        throw new NotImplementedException();
+        var validationResult = await _animalModelValidator.ValidateAsync(newAnimal);
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(validationResult.Errors);
+        }
+
+        return Ok();
     }
 }

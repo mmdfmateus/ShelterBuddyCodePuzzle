@@ -1,3 +1,4 @@
+using ShelterBuddy.CodePuzzle.Api.Models.Validations;
 using ShelterBuddy.CodePuzzle.Core.DataAccess;
 using ShelterBuddy.CodePuzzle.Core.Entities;
 
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IRepository<Animal, Guid>, AnimalRepository>();
+builder.Services.AddScoped<AnimalModelValidator>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
