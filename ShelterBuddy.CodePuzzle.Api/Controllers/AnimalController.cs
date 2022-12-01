@@ -46,6 +46,21 @@ public class AnimalController : ControllerBase
             return BadRequest(validationResult.Errors);
         }
 
-        return Ok();
+        var animal = new Animal
+        {
+            Name = newAnimal.Name,
+            Colour = newAnimal.Colour,
+            DateFound = newAnimal.DateFound,
+            DateLost = newAnimal.DateLost,
+            MicrochipNumber = newAnimal.MicrochipNumber,
+            DateInShelter = newAnimal.DateInShelter,
+            DateOfBirth = newAnimal.DateOfBirth,
+            AgeMonths = newAnimal.AgeMonths,
+            AgeWeeks = newAnimal.AgeWeeks,
+            AgeYears = newAnimal.AgeYears,
+            Species = newAnimal.Species,
+        };
+        repository.Add(animal);
+        return Ok(animal);
     }
 }

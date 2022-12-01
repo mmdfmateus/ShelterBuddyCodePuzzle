@@ -97,7 +97,7 @@ namespace ShelterBuddy.CodePuzzle.Api.Tests.Controllers
 
             var response = await _sut.Post(request);
 
-            response.ShouldBeOfType<OkResult>();
+            response.ShouldBeOfType<OkObjectResult>();
         }
     }
 }
