@@ -58,5 +58,46 @@ namespace ShelterBuddy.CodePuzzle.Api.Tests.Controllers
             var badRequest = response as BadRequestObjectResult;
             (badRequest.Value as List<ValidationFailure>).ShouldContain(item => item.ErrorMessage == errorMessageExpected);
         }
+
+        [Fact]
+        public async Task Create_ReturnsBadRequestIfDateOfBirthAndAgeAreMissing()
+        {
+            var request = new AnimalModel()
+            {
+                Name = "animal name",
+                Species = "German Sheppard",
+                DateOfBirth = null,
+                AgeYears = null, 
+                AgeMonths = null,
+                AgeWeeks = null
+            };
+
+            var response = await _sut.Post(request);
+
+            var badRequest = response as BadRequestObjectResult;
+            (badRequest.Value as List<ValidationFailure>).ShouldContain(item => item.ErrorMessage == "'DateOfBirth' or 'Age' must be provided");
+        }
+
+        [Theory]
+        [InlineData(false, null, null, null)]
+        [InlineData(true, 2022, null, null)]
+        [InlineData(true, null, 9, null)]
+        [InlineData(true, null, null, 2)]
+        public async Task Create_ReturnsOkIfDateOfBirthOrAnyAgeIsProvided(bool isNullDate, int? ageYears, int? ageMonths, int? ageWeeks)
+        {
+            var request = new AnimalModel()
+            {
+                Name = "animal name",
+                Species = "German Sheppard",
+                DateOfBirth = isNullDate ? null : DateTime.Now,
+                AgeYears = ageYears,
+                AgeMonths = ageMonths,
+                AgeWeeks = ageWeeks
+            };
+
+            var response = await _sut.Post(request);
+
+            response.ShouldBeOfType<OkResult>();
+        }
     }
 }

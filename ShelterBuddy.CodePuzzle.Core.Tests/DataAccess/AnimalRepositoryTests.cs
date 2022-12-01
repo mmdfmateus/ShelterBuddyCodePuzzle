@@ -6,12 +6,17 @@ namespace ShelterBuddy.CodePuzzle.Core.Tests.DataAccess;
 
 public class AnimalRepositoryTests
 {
-    [Fact]
-    public void New_CanLoadData()
-    {
-        var repository = new AnimalRepository();
+    private readonly AnimalRepository _sut;
 
-        var animals = repository.GetAll();
+    public AnimalRepositoryTests()
+    {
+        _sut = new();
+    }
+
+    [Fact]
+    public void GetAll_CanLoadData()
+    {
+        var animals = _sut.GetAll();
 
         animals.ShouldNotBeEmpty();
     }
