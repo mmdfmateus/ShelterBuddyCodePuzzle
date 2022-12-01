@@ -11,6 +11,12 @@ namespace ShelterBuddy.CodePuzzle.Api.Models.Validations
                 .WithMessage("'Name' must not be null")
                 .NotEmpty()
                 .WithMessage("'Name' must not be empty");
+
+            RuleFor(model => model.Species)
+                .NotNull()
+                .WithMessage("'Species' must not be null")
+                .NotEmpty()
+                .WithMessage("'Species' must not be empty");
         }
     }
 }

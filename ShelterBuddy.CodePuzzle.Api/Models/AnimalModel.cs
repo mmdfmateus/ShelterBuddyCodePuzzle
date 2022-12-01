@@ -14,4 +14,5 @@ public class AnimalModel
     public int? AgeMonths { get; init; }
     public int? AgeWeeks { get; init; }
     public string? AgeText { get; init; }
+    public string Species { get; init; }
 }

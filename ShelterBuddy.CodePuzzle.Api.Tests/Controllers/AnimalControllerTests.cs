@@ -28,11 +28,29 @@ namespace ShelterBuddy.CodePuzzle.Api.Tests.Controllers
         [Theory]
         [InlineData(null, "'Name' must not be null")]
         [InlineData("", "'Name' must not be empty")]
+        [InlineData("   ", "'Name' must not be empty")]
         public async Task Create_ReturnsBadRequestIfNameIsNullOrEmpty(string name, string errorMessageExpected)
         {
             var request = new AnimalModel()
             {
                 Name = name
+            };
+
+            var response = await _sut.Post(request);
+
+            var badRequest = response as BadRequestObjectResult;
+            (badRequest.Value as List<ValidationFailure>).ShouldContain(item => item.ErrorMessage == errorMessageExpected);
+        }
+
+        [Theory]
+        [InlineData(null, "'Species' must not be null")]
+        [InlineData("", "'Species' must not be empty")]
+        [InlineData("   ", "'Species' must not be empty")]
+        public async Task Create_ReturnsBadRequestIfSpeciesIsNullOrEmpty(string species, string errorMessageExpected)
+        {
+            var request = new AnimalModel()
+            {
+                Species = species
             };
 
             var response = await _sut.Post(request);

@@ -33,7 +33,8 @@ public class AnimalController : ControllerBase
         AgeText = animal.AgeText,
         AgeMonths = animal.AgeMonths,
         AgeWeeks = animal.AgeWeeks,
-        AgeYears = animal.AgeYears
+        AgeYears = animal.AgeYears,
+        Species = animal.Species,
     }).ToArray();
 
     [HttpPost]
